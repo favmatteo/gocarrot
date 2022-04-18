@@ -18,7 +18,6 @@ import java.util.ArrayList;
 
 public class MapReader {
     private final ArrayList<ArrayList<Object>> mappa;
-    private BufferedReader reader;
     private final Board board;
 
     public MapReader(Board board) {
@@ -27,8 +26,7 @@ public class MapReader {
     }
 
     public ArrayList<ArrayList<Object>> read(String level) throws IOException {
-        System.out.println(FileSystems.getDefault().getPath("."));
-        this.reader = new BufferedReader(new FileReader("mappa" + level));
+        BufferedReader reader = new BufferedReader(new FileReader("resources/mappa" + level));
         String line = reader.readLine();
         int x = 0;
         int y = 0;
