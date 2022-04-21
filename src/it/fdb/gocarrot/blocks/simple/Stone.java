@@ -20,7 +20,7 @@ public class Stone extends Block {
 
     public void setValori(){
         for(int i = 0; i < 13; ++i) {
-            valori.add(random.nextInt(-10, 10));
+            valori.add(random.nextInt( 10));
         }
     }
 
