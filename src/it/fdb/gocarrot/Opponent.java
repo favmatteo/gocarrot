@@ -27,13 +27,14 @@ public class Opponent extends Thread {
     public void draw(Graphics2D graphics2D) {
         if(visible) {
             graphics2D.setColor(Color.PINK);
+            graphics2D.setColor(new Color(204, 119, 34, 90));
             graphics2D.fillRoundRect(x, y, Player.WIDTH, Player.HEIGHT, 70, 70);
-            graphics2D.setColor(Color.decode("#6aaa12"));
+            graphics2D.setColor(new Color(106, 170, 18, 90));
             graphics2D.setStroke(new BasicStroke(10));
             graphics2D.draw(new Line2D.Float(x + 20, y + 5, x - 5, y - 15));
             graphics2D.draw(new Line2D.Float(x + 30, y + 5, x + 50 + 5, y - 15));
             graphics2D.draw(new Line2D.Float(x + 25, y + 7, x + 25, y - 25));
-            graphics2D.setColor(Color.decode("#AE661E"));
+            graphics2D.setColor(new Color(174, 102, 30, 90));
             graphics2D.setStroke(new BasicStroke(3));
             graphics2D.drawArc(x + 3, y + 20, 40, 10, 0, -180);
             graphics2D.drawArc(x + 7, y + 40, 40, 10, 0, -130);
