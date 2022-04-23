@@ -13,19 +13,23 @@ import it.fdb.gocarrot.element.GenericElement;
 
 import java.awt.*;
 import java.awt.geom.Line2D;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.Socket;
 import java.util.ArrayList;
 
 public class Player {
-    private Board board;
+    private final Board board;
     private int x;
     private int y;
-    public final int WIDTH = 50;
-    public final int HEIGHT = 100;
+    public static final int WIDTH = 50;
+    public static final int HEIGHT = 100;
 
     private double xSpeed; // > 0 destra, < 0 sinistra
     private double ySpeed; // > 0 giù, < 0 su
 
-    private Rectangle hitBox;
+    private final Rectangle hitBox;
 
     private boolean keyUP;
     private boolean keyDOWN;
@@ -41,14 +45,31 @@ public class Player {
 
     private boolean completedLevel;
 
+    private final Client client;
+    private final int clientNo;
+
+    private int level = 1;
+
     public Player(Board board, int x, int y) {
         this.board = board;
         this.x = x;
         this.y = y;
         this.hitBox = new Rectangle(x, y, WIDTH, HEIGHT);
+        this.client = new Client(board);
+        try {
+            this.clientNo = client.getNumberID();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println(this.clientNo);
     }
 
     public void setSpeed(){
+        try {
+            client.sendCoordinates(clientNo);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         if(y < 500) {
             if (keyLEFT && board.getCamera().getX() < 0){
                 xSpeed--;
@@ -298,6 +319,10 @@ public class Player {
         return x;
     }
 
+    public int getY() {
+        return y;
+    }
+
     public int getScore() {
         return score;
     }
@@ -317,6 +342,22 @@ public class Player {
 
     public boolean isCompletedLevel() {
         return completedLevel;
+    }
+
+    public int getClientNo() {
+        return clientNo;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
     }
 }
 

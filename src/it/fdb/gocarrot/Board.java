@@ -20,19 +20,22 @@ public class Board extends JPanel {
 
     private final Player player;
     private final Timer timer;
+    private Opponent opponent;
     private ArrayList<ArrayList<Object>> mappa;
     private final Camera camera;
     private final MapReader mapReader;
-    private int level = 1;
 
     public Board() {
         player = new Player(this, 100, 480);
+        opponent = new Opponent(this, player, 100, 480);
         timer = new Timer();
         mapReader = new MapReader(this);
-        loadMap(level);
+        loadMap(player.getLevel());
 
         camera = new Camera();
         setBackground(Color.decode("#87CEFF"));
+
+        opponent.start();
 
         timer.schedule(new TimerTask() {
             @Override
@@ -49,16 +52,17 @@ public class Board extends JPanel {
                 }
                 if(player.isCompletedLevel()){
                     mappa.clear();
-                    loadMap(++level);
+                    player.setLevel(player.getLevel() + 1);
+                    loadMap(player.getLevel());
                     player.setCompletedLevel(false);
                     reset();
                 }
+
                 repaint();
 
             }
         }, 0, 17);
     }
-
 
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode(); // virtual key
@@ -94,6 +98,8 @@ public class Board extends JPanel {
         super.paintComponent(graphics);
         Graphics2D graphics2D = (Graphics2D) graphics;
         player.draw(graphics2D);
+        opponent.draw(graphics2D);
+        // opponent.draw(graphics2D);
         for(ArrayList<Object> strato : mappa){
             for(Object element : strato) {
                 if(element instanceof Block)
@@ -105,7 +111,7 @@ public class Board extends JPanel {
             }
         }
         graphics2D.setFont(new Font("Arial", Font.BOLD, 18));
-        String stringLevel = "Livello: " + level;
+        String stringLevel = "Livello: " + player.getLevel();
         String stringScore = "Score: " + player.getScore();
         String stringScudo = "Scudo: " + (player.hasShield() ? "SI" : "NO") + " " +
                 (player.getNumShield() > 1 ? "x" + player.getNumShield() : "");
@@ -129,8 +135,8 @@ public class Board extends JPanel {
         try {
             mappa = mapReader.read(String.valueOf(lvl));
         } catch (FileNotFoundException e){
-            this.level = 1;
-            loadMap(this.level);
+            player.setLevel(1);
+            loadMap(player.getLevel());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -139,4 +145,10 @@ public class Board extends JPanel {
     public Camera getCamera() {
         return camera;
     }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+
 }

@@ -1,6 +1,5 @@
 package it.fdb.gocarrot;
 
-import it.fdb.gocarrot.Board;
 import it.fdb.gocarrot.blocks.Block;
 import it.fdb.gocarrot.blocks.gravityblocks.Sand;
 import it.fdb.gocarrot.blocks.simple.*;
@@ -12,8 +11,6 @@ import it.fdb.gocarrot.element.Finish;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class MapReader {
