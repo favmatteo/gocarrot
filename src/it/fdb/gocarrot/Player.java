@@ -1,7 +1,6 @@
 package it.fdb.gocarrot;
 
 import it.fdb.gocarrot.blocks.Block;
-import it.fdb.gocarrot.blocks.gravityblocks.Sand;
 import it.fdb.gocarrot.blocks.simple.Grass;
 import it.fdb.gocarrot.blocks.special.*;
 import it.fdb.gocarrot.bonus.Coin;
@@ -13,10 +12,7 @@ import it.fdb.gocarrot.element.GenericElement;
 
 import java.awt.*;
 import java.awt.geom.Line2D;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.net.Socket;
 import java.util.ArrayList;
 
 public class Player {
@@ -50,6 +46,20 @@ public class Player {
 
     private int level = 1;
 
+    /**
+     * Costruttore che inizializza un oggetto di tipo Player
+     * Posiziona il giocatore sull'asse x e y, crea una sua hitbox
+     * rappresentata da un rettangolo di dimensioni pari a quelle del player
+     * inizializza poi un oggetto di tipo Client che permette di comunicare
+     * le coordinate del player al server tramite socket, una volta inizializzato
+     * l'oggetto fa una richiesta al server per sapere il suo number ID
+     * (durante le comunicazioni al server il messaggio spedito contiene un number ID
+     * che indica il numero della sessione, essendoci solamente due player il number ID
+     * assume il valore 1 o 2)
+     * @param board board iniziale
+     * @param x posizione sull'asse delle x iniziale
+     * @param y posizione sull'asse delle y iniziale
+     */
     public Player(Board board, int x, int y) {
         this.board = board;
         this.x = x;
@@ -64,19 +74,29 @@ public class Player {
         System.out.println(this.clientNo);
     }
 
-    public void setSpeed(){
+
+    /**
+     * Metodo che si occupa di gestire il player, i movimenti, le collisioni
+     */
+    public void set(){
+        // Invia le coordinate del player al server
         try {
             client.sendCoordinates(clientNo);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        // se il personaggio è ancora nello schermo
         if(y < 500) {
+            // se preme freccia sinistra e non va fuori dal campo della telecamera
             if (keyLEFT && board.getCamera().getX() < 0){
                 xSpeed--;
             }
+            // se preme freccia destra
             else if (keyRIGHT){
                 xSpeed++;
             }
+            // altrimenti se nessuno dei due è premuto vai avanti per un po'
             else{
                 xSpeed *= 0.8;
             }
@@ -116,11 +136,11 @@ public class Player {
         }
         ySpeed += 0.3;
 
+        // kdown = discesa rapida dopo salto
         boolean kdown = true;
         if(keyDOWN){
             for(ArrayList<Object> strato : board.getMappa()) {
                 for (Object element : strato) {
-                    // il personaggio può saltare quando tocca il suolo
                     if(element instanceof Block && ySpeed > 1) {
                         if (!((Block) element).getHitBox().intersects(hitBox) && kdown) {
                             ySpeed += 0.5;
@@ -133,7 +153,7 @@ public class Player {
 
 
 
-        // orizzontale collisione
+        // collisione orizzontale
         hitBox.x += xSpeed;
         for(ArrayList<Object> strato : board.getMappa()) {
             for (Object element : strato) {
@@ -171,7 +191,8 @@ public class Player {
             }
         }
 
-        // vari controlli
+        // collisione con blocchi speciali
+        // come slime, ghiaccio, spine, trampolino, salto kdown terra, coins, scudo, CheckPoint e fine
         hitBox.y = (int) (hitBox.y + ySpeed + 1);
         for(ArrayList<Object> strato : board.getMappa()) {
             for (Object element : strato) {
@@ -208,6 +229,7 @@ public class Player {
         }
 
 
+        // muovi il personaggio insieme alla telecamera
         board.getCamera().setX((int)(board.getCamera().getX() - xSpeed));
         y += ySpeed;
 
@@ -220,6 +242,10 @@ public class Player {
         }
     }
 
+    /**
+     * Funzione che si occupa di disegnare il player
+     * @param graphics2D graphics2D
+     */
     public void draw(Graphics2D graphics2D){
         graphics2D.setColor(Color.decode("#CC7722"));
         graphics2D.fillRoundRect(x, y, WIDTH, HEIGHT, 70, 70);
@@ -243,7 +269,7 @@ public class Player {
             graphics2D.drawLine(x + 36, y + 41, x + 36, y + 79);
         }
 
-        /**
+        /*
         // cavallo
         graphics2D.setColor(Color.decode("#662200"));
         graphics2D.fillRoundRect(200, 195, 150, 55, 70, 70);
