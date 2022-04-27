@@ -9,6 +9,10 @@ public class MultithreadedSocketServer {
     private final ArrayList<ServerSocketThread> serverSocketThreads;
     private final ServerSocket server;
 
+    /**
+     * Costruttore che inizializza la classe MultithreadedSocketServer
+     * avvia il server socket in ascolto sulla porta 5050
+     */
     public MultithreadedSocketServer(){
         serverSocketThreads = new ArrayList<>();
         try {
@@ -17,6 +21,12 @@ public class MultithreadedSocketServer {
             throw new RuntimeException(e);
         }
     }
+
+    /**
+     * Metodo run, a ogni collegamento del Player viene avviata un'istanza di ServerSocketThread
+     * l'istanza viene salvata nell'arraylist che permetterà poi di inviare a tutti i client
+     * un messaggio (semplicemente scorrendo l'arraylist)
+     */
     public void run() {
         try {
             System.out.println("Server started....");

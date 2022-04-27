@@ -2,8 +2,10 @@ package it.fdb.gocarrot;
 
 import java.awt.*;
 import java.awt.geom.Line2D;
-import java.io.IOException;
 
+/**
+ * Classe che rappresenta l'avversario (colui che si collega online)
+ */
 public class Opponent extends Thread {
     private final Board board;
     private final Player player;
@@ -24,6 +26,10 @@ public class Opponent extends Thread {
         this.y = y;
     }
 
+    /**
+     * Funzione che si occupa di disegnare l'avversario
+     * @param graphics2D graphics2D
+     */
     public void draw(Graphics2D graphics2D) {
         if(visible) {
             graphics2D.setColor(Color.PINK);
@@ -42,6 +48,10 @@ public class Opponent extends Thread {
         }
     }
 
+    /**
+     * Metodo che viene avviato dal thread, invia al server le coordinate del player,
+     * riceve le coordinate dell'altro player e in base al messaggio che riceve aggiorna le sue coordinate
+     */
     @Override
     public void run(){
         while (true) {
@@ -51,11 +61,8 @@ public class Opponent extends Thread {
                 String[] coordinates = messaggio.split(" ");
                 x = Integer.parseInt(coordinates[0]) + this.board.getCamera().getX();
                 y = Integer.parseInt(coordinates[1]);
-                if(Integer.parseInt(coordinates[2]) == player.getLevel()){
-                    visible = true;
-                }else{
-                    visible = false;
-                }
+                visible = Integer.parseInt(coordinates[2]) == player.getLevel(); // rende visibile l'opponent
+                                                                                // solo se si trovano sullo stesso livello
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

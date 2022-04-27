@@ -3,8 +3,11 @@ package it.fdb.gocarrot;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+/**
+ * Classe che si occupa di gestire gli input dei tasti
+ */
 public class KeysManager extends KeyAdapter {
-    private Board board;
+    private final Board board;
 
     public KeysManager(Board board) {
         this.board = board;

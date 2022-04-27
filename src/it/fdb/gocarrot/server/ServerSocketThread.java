@@ -14,6 +14,12 @@ public final class ServerSocketThread extends Thread {
 
     private final int clientNo;
 
+    /**
+     * Costruttore classe ServerSocketThread, si occupa di istanziare i vari oggetti
+     * @param inSocket socket collegamento client
+     * @param counter numero del client collegato al server
+     * @param multithreadedSocketServer istanza MultithreadedSocketServer
+     */
     public ServerSocketThread(Socket inSocket, int counter, MultithreadedSocketServer multithreadedSocketServer){
         this.serverClient = inSocket;
         this.clientNo = counter;
@@ -26,6 +32,13 @@ public final class ServerSocketThread extends Thread {
         }
     }
 
+    /**
+     * Metodo run
+     * Il socket resta in ascolto finchè non riceve un messaggio quit
+     * se il socket riceve un messaggio che contiene la parola MyNumbers allora invia
+     * al client il suo numero col quale è assegnato al server, altrimenti invia al client
+     * i dati (num client, posizione x, posizione y, livello) dell'altro player
+     */
     public void run(){
         try {
             String clientMessage = "";

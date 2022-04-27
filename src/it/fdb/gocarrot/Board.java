@@ -25,6 +25,10 @@ public class Board extends JPanel {
     private final Camera camera;
     private final MapReader mapReader;
 
+    /**
+     * Costruttore, inizializza oggetti, crea un timer scheduler
+     * il quale ogni tot tempo esegue delle azioni
+     */
     public Board() {
         player = new Player(this, 100, 480);
         opponent = new Opponent(this, player, 100, 480);
@@ -64,6 +68,10 @@ public class Board extends JPanel {
         }, 0, 17);
     }
 
+    /**
+     * Controlla se un tasto è premuto
+     * @param e evento tasto premuto
+     */
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode(); // virtual key
         if(key == KeyEvent.VK_LEFT) player.setKeyLEFT(true);
@@ -72,7 +80,10 @@ public class Board extends JPanel {
         if(key == KeyEvent.VK_DOWN) player.setKeyDOWN(true);
     }
 
-
+    /**
+     * Controlla se un tasto è rilasciato
+     * @param e evento tasto rilasciato
+     */
     public void keyReleased(KeyEvent e) {
         int key = e.getKeyCode(); // virtual key
         if(key == KeyEvent.VK_LEFT) player.setKeyLEFT(false);
@@ -81,6 +92,9 @@ public class Board extends JPanel {
         if(key == KeyEvent.VK_DOWN) player.setKeyDOWN(false);
     }
 
+    /**
+     * Resetta impostazione player ad esempio alla morte.
+     */
     public void reset(){
         player.reset();
         for(ArrayList<Object> strato : mappa){
@@ -93,6 +107,10 @@ public class Board extends JPanel {
         camera.setX(0);
     }
 
+    /**
+     * Metodo che si occupa di disegnare le varie cose
+     * @param graphics graphics2D
+     */
     @Override
     public void paintComponent(Graphics graphics){
         super.paintComponent(graphics);
@@ -116,21 +134,16 @@ public class Board extends JPanel {
         String stringScudo = "Scudo: " + (player.hasShield() ? "SI" : "NO") + " " +
                 (player.getNumShield() > 1 ? "x" + player.getNumShield() : "");
 
-        // System.out.println(600 - stringLevel.length()); // 590
-        // System.out.println(600 - stringScore.length()); // 592
-        // System.out.println(600 - stringScudo.length()); // 590
-
         int max = stringScudo.length();
-
         graphics2D.drawString(stringLevel, 600 - max * 10 - 10, 30);
         graphics2D.drawString(stringScudo, 600 - max * 10 - 10, 50);
         graphics2D.drawString(stringScore, 600 - max * 10 - 10, 70);
     }
 
-    public ArrayList<ArrayList<Object>> getMappa() {
-        return mappa;
-    }
-
+    /**
+     * Metodo che si occupa di caricare una mappa
+     * @param lvl livello da caricare
+     */
     public void loadMap(int lvl){
         try {
             mappa = mapReader.read(String.valueOf(lvl));
@@ -140,6 +153,10 @@ public class Board extends JPanel {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public ArrayList<ArrayList<Object>> getMappa() {
+        return mappa;
     }
 
     public Camera getCamera() {

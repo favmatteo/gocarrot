@@ -5,6 +5,10 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
+/**
+ * Metodo che rappresenta il client
+ * permette la connessione a un socket, il ricevimento e l'invio di dati
+ */
 public class Client {
     private final Socket socket;
     private final DataOutputStream dataOutputStream;
@@ -13,7 +17,7 @@ public class Client {
 
     public Client(Board board){
         try {
-            socket = new Socket("192.168.1.246", 5050);
+            socket = new Socket("localhost", 5050);
             dataOutputStream = new DataOutputStream(socket.getOutputStream());
             dataInputStream = new DataInputStream(socket.getInputStream());
             this.board = board;
@@ -22,22 +26,39 @@ public class Client {
         }
     }
 
+    /**
+     * Invia coordinate x e y insieme al numero client al server
+     * @param clientNo numero client
+     * @throws IOException Lancia eccezzione in caso di problemi con la comunicazione col server
+     */
     public void sendCoordinates(int clientNo) throws IOException {
         dataOutputStream.writeUTF(clientNo + " " + (board.getPlayer().getX() - board.getCamera().getX()) + " " + board.getPlayer().getY() + " " + board.getPlayer().getLevel());
     }
 
+    /**
+     * Riceve un messaggio dal server
+     * @return messaggio
+     * @throws IOException Lancia eccezzione in caso di problemi con la comunicazione col server
+     */
+    public String getMessage() throws IOException {
+        return dataInputStream.readUTF();
+    }
+
+    /**
+     * Chiude la sessione con il socket, provocando la distruzione dell'istanza ServerSocketThread e quindi la chiusura del socket stesso
+     * @throws IOException Lancia eccezzione in caso di problemi con la comunicazione col server
+     */
     public void close() throws IOException {
         dataOutputStream.writeUTF("quit");
     }
 
-    public String getMessage() throws IOException {
-        String utf = dataInputStream.readUTF();
-        return utf;
-    }
-
+    /**
+     * Fa una richiesta al socket per conoscere il numero ID
+     * @return numero ID
+     * @throws IOException Lancia eccezzione in caso di problemi con la comunicazione col server
+     */
     public int getNumberID() throws IOException {
         dataOutputStream.writeUTF("myNumber");
-        System.out.println();
         String risposta = dataInputStream.readUTF();
         return Integer.parseInt(risposta);
     }

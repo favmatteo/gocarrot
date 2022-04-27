@@ -13,6 +13,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * Classe che si occupa di tradurre la mappa letta dei file in una matrice
+ */
 public class MapReader {
     private final ArrayList<ArrayList<Object>> mappa;
     private final Board board;
@@ -22,15 +25,25 @@ public class MapReader {
         this.board = board;
     }
 
+    /**
+     *
+     * @param level livello da caricare
+     * @return <code>ArrayList<ArrayList<Object>></code> mappa
+     * @throws IOException Lancia un'eccezione se il file non è raggiungibile e caricabile
+     */
     public ArrayList<ArrayList<Object>> read(String level) throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader("resources/mappa" + level));
+        BufferedReader reader = new BufferedReader(new FileReader("resources/mappa" + level)); // legge mappa
         String line = reader.readLine();
         int x = 0;
         int y = 0;
+        // scorre tutte le line
         while (line != null){
             ArrayList<Object> strato = new ArrayList<>();
+            // se la linea non è un commento
             if(!line.startsWith("//")) {
+                // scorre tutta la linea
                 for(int i = 0; i < line.length(); ++i){
+                    // crea i vari blocchi in base ai caratteri che trova
                     char c = line.charAt(i);
                     switch (c) {
                         case '|' -> strato.add(new Brick(x, y));

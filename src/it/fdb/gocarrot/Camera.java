@@ -1,5 +1,8 @@
 package it.fdb.gocarrot;
 
+/**
+ * Classe che si occupa di gestire la telecamera
+ */
 public class Camera {
     private int x;
 
