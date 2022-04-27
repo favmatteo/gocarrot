@@ -57,7 +57,6 @@ public class Opponent extends Thread {
         while (true) {
             try {
                 messaggio = client.getMessage();
-                client.sendCoordinates(this.player.getClientNo());
                 String[] coordinates = messaggio.split(" ");
                 x = Integer.parseInt(coordinates[0]) + this.board.getCamera().getX();
                 y = Integer.parseInt(coordinates[1]);

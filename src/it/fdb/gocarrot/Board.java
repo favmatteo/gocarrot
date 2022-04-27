@@ -20,11 +20,10 @@ public class Board extends JPanel {
 
     private final Player player;
     private final Timer timer;
-    private Opponent opponent;
+    private final Opponent opponent;
     private ArrayList<ArrayList<Object>> mappa;
     private final Camera camera;
     private final MapReader mapReader;
-
     private final Audio audio;
 
     /**
