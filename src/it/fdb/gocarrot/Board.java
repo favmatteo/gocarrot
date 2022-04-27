@@ -25,6 +25,8 @@ public class Board extends JPanel {
     private final Camera camera;
     private final MapReader mapReader;
 
+    private final Audio audio;
+
     /**
      * Costruttore, inizializza oggetti, crea un timer scheduler
      * il quale ogni tot tempo esegue delle azioni
@@ -34,7 +36,9 @@ public class Board extends JPanel {
         opponent = new Opponent(this, player, 100, 480);
         timer = new Timer();
         mapReader = new MapReader(this);
+        audio = new Audio("GameSound.wav");
         loadMap(player.getLevel());
+        audio.play();
 
         camera = new Camera();
         setBackground(Color.decode("#87CEFF"));
@@ -167,5 +171,7 @@ public class Board extends JPanel {
         return player;
     }
 
-
+    public Audio getAudio() {
+        return audio;
+    }
 }

@@ -17,7 +17,7 @@ public class Client {
 
     public Client(Board board){
         try {
-            socket = new Socket("localhost", 5050);
+            socket = new Socket("169.254.153.123", 5050);
             dataOutputStream = new DataOutputStream(socket.getOutputStream());
             dataInputStream = new DataInputStream(socket.getInputStream());
             this.board = board;

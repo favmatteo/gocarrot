@@ -19,6 +19,7 @@ public class MainFrame extends JFrame {
             public void windowClosing(WindowEvent e) {
                 try {
                     board.getPlayer().getClient().close();
+                    board.getAudio().stop();
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
