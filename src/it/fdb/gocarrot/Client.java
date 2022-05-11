@@ -17,7 +17,7 @@ public class Client {
 
     public Client(Board board){
         try {
-            socket = new Socket("10.0.0.102", 63287);
+            socket = new Socket("localhost", 5050);
             dataOutputStream = new DataOutputStream(socket.getOutputStream());
             dataInputStream = new DataInputStream(socket.getInputStream());
             this.board = board;
@@ -59,6 +59,15 @@ public class Client {
      */
     public int getNumberID() throws IOException {
         dataOutputStream.writeUTF("myNumber");
+        String risposta = dataInputStream.readUTF();
+        return Integer.parseInt(risposta);
+    }
+
+    /**
+     * Chiede al server il numero di client connessi
+     */
+    public int askNumberClient() throws IOException {
+        dataOutputStream.writeUTF("nClient");
         String risposta = dataInputStream.readUTF();
         return Integer.parseInt(risposta);
     }

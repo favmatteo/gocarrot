@@ -68,7 +68,7 @@ public class Board extends JPanel {
                 repaint();
 
             }
-        }, 0, 17);
+        }, 0, 15);
     }
 
     /**

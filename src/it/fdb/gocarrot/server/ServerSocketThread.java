@@ -12,7 +12,7 @@ public final class ServerSocketThread extends Thread {
 
     private final MultithreadedSocketServer multithreadedSocketServer;
 
-    private final int clientNo;
+    private int clientNo;
 
     /**
      * Costruttore classe ServerSocketThread, si occupa di istanziare i vari oggetti
@@ -43,6 +43,11 @@ public final class ServerSocketThread extends Thread {
         try {
             String clientMessage = "";
             while (!clientMessage.equals("quit")){
+                if(multithreadedSocketServer.getServerSocketThreads().size() == 1){
+                    System.out.println(clientNo + " diventa 1");
+                    clientNo = 1;
+                }
+
                 clientMessage = inputStream.readUTF();
 
                 String[] clientMessages = clientMessage.split(" ");

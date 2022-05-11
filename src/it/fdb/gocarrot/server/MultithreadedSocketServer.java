@@ -31,13 +31,11 @@ public class MultithreadedSocketServer {
         try {
             System.out.println("Server started....");
             while (true) {
-                if(serverSocketThreads.size() < 2) {
-                    Socket serverClient = server.accept(); // il server accetta la richiesta del client
-                    System.out.println("Client n° " + (serverSocketThreads.size() + 1) + " started!");
-                    ServerSocketThread sct = new ServerSocketThread(serverClient, serverSocketThreads.size() + 1, this);
-                    sct.start();
-                    serverSocketThreads.add(sct);
-                }
+                Socket serverClient = server.accept(); // il server accetta la richiesta del client
+                System.out.println("Client n° " + (serverSocketThreads.size() + 1) + " started!");
+                ServerSocketThread sct = new ServerSocketThread(serverClient, serverSocketThreads.size() + 1, this);
+                sct.start();
+                serverSocketThreads.add(sct);
             }
         } catch (Exception e) {
             System.err.println("Error");

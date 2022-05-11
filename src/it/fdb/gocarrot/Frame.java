@@ -5,8 +5,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 
-public class MainFrame extends JFrame {
-    public MainFrame() {
+public class Frame extends JFrame {
+    public Frame() {
         Board board = new Board();
         board.setLocation(0, 0);
         board.setSize(this.getSize());
