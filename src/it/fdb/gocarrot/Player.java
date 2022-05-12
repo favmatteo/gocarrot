@@ -44,7 +44,7 @@ public class Player {
     private final Client client;
     private final int clientNo;
 
-    private int level = 1;
+    private int level = 5;
 
     /**
      * Costruttore che inizializza un oggetto di tipo Player
