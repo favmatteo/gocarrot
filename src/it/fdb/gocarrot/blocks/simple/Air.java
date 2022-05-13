@@ -2,7 +2,8 @@ package it.fdb.gocarrot.blocks.simple;
 
 import it.fdb.gocarrot.blocks.Block;
 
-import java.awt.*;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
 
 public class Air extends Block {
     public Air(int x, int y) {

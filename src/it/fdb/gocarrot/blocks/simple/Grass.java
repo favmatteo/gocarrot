@@ -2,13 +2,14 @@ package it.fdb.gocarrot.blocks.simple;
 
 import it.fdb.gocarrot.blocks.Block;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.Random;
 
 public class Grass extends Block {
-    private Random random;
-    private ArrayList<ArrayList<Integer>> randomBlock = new ArrayList<>();
+    private final Random random;
+    private final ArrayList<ArrayList<Integer>> randomBlock = new ArrayList<>();
     private boolean brokenBlock;
 
 

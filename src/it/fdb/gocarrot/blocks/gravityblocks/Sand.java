@@ -3,14 +3,15 @@ package it.fdb.gocarrot.blocks.gravityblocks;
 import it.fdb.gocarrot.Board;
 import it.fdb.gocarrot.blocks.Block;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.Random;
 
 public class Sand extends Block implements IGravity{
-    private Random random;
-    private ArrayList<ArrayList<Integer>> randomBlock = new ArrayList<>();
-    private Board board;
+    private final Random random;
+    private final ArrayList<ArrayList<Integer>> randomBlock = new ArrayList<>();
+    private final Board board;
 
     private float ySpeed;
 

@@ -1,6 +1,7 @@
 package it.fdb.gocarrot.element;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics2D;
 
 public class Finish extends GenericElement{
 

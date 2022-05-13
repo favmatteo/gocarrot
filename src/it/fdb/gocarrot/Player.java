@@ -9,7 +9,10 @@ import it.fdb.gocarrot.bonus.Shield;
 import it.fdb.gocarrot.element.Finish;
 import it.fdb.gocarrot.element.GenericElement;
 
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.geom.Line2D;
 import java.io.IOException;
 import java.util.ArrayList;

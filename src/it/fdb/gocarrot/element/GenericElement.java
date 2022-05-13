@@ -2,7 +2,8 @@ package it.fdb.gocarrot.element;
 
 import it.fdb.gocarrot.Camera;
 
-import java.awt.*;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
 
 public abstract class GenericElement {
     protected int x;

@@ -2,7 +2,8 @@ package it.fdb.gocarrot.blocks.simple;
 
 import it.fdb.gocarrot.blocks.Block;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics2D;
 
 public class Brick extends Block {
 

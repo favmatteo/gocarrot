@@ -9,10 +9,8 @@ import it.fdb.gocarrot.bonus.Shield;
 import it.fdb.gocarrot.element.Finish;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 
 /**

@@ -2,14 +2,16 @@ package it.fdb.gocarrot.blocks.simple;
 
 import it.fdb.gocarrot.blocks.Block;
 
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.Random;
 
 public class Stone extends Block {
 
-    private Random random;
-    private ArrayList<Integer> valori;
+    private final Random random;
+    private final ArrayList<Integer> valori;
 
     public Stone(int x, int y) {
         super(x, y);

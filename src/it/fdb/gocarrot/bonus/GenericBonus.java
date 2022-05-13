@@ -2,7 +2,8 @@ package it.fdb.gocarrot.bonus;
 
 import it.fdb.gocarrot.Camera;
 
-import java.awt.*;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
 
 public abstract class GenericBonus {
     protected int x;
