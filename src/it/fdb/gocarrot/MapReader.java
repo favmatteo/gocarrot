@@ -9,8 +9,10 @@ import it.fdb.gocarrot.bonus.Shield;
 import it.fdb.gocarrot.element.Finish;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 
 /**
@@ -32,6 +34,9 @@ public class MapReader {
      * @throws IOException Lancia un'eccezione se il file non è raggiungibile e caricabile
      */
     public ArrayList<ArrayList<Object>> read(String level) throws IOException {
+        String name = "resources/mappa" + level;
+        //System.out.println(name);
+        //FileReader fileReader = new FileReader(new File(getClass().getResource(name).toURI()));
         BufferedReader reader = new BufferedReader(new FileReader("resources/mappa" + level)); // legge mappa
         String line = reader.readLine();
         int x = 0;

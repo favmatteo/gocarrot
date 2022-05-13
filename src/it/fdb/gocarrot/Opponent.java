@@ -15,8 +15,10 @@ public class Opponent extends Thread {
 
     private boolean visible = false;
 
-
     private String messaggio;
+
+    private int tempoPartita;
+
 
     public Opponent(Board board, Player player, int x, int y) {
         this.board = board;
@@ -24,6 +26,7 @@ public class Opponent extends Thread {
         client = player.getClient();
         this.x = x;
         this.y = y;
+        this.tempoPartita = 0;
     }
 
     /**
@@ -62,10 +65,14 @@ public class Opponent extends Thread {
                 y = Integer.parseInt(coordinates[1]);
                 visible = Integer.parseInt(coordinates[2]) == player.getLevel(); // rende visibile l'opponent
                                                                                 // solo se si trovano sullo stesso livello
+                tempoPartita = Integer.parseInt(coordinates[3]); // tempo
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         }
     }
 
+    public int getTempoPartita() {
+        return tempoPartita;
+    }
 }

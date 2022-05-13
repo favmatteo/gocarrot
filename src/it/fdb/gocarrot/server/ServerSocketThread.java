@@ -57,7 +57,7 @@ public final class ServerSocketThread extends Thread {
                 else{
                     for(ServerSocketThread serverSocketThread : multithreadedSocketServer.getServerSocketThreads()){
                         if(serverSocketThread.clientNo != clientNo)
-                            serverSocketThread.outputStream.writeUTF(clientMessages[1] + " " + clientMessages[2] + " " + clientMessages[3]); // [num client] x y level
+                            serverSocketThread.outputStream.writeUTF(clientMessages[1] + " " + clientMessages[2] + " " + clientMessages[3] + " " + clientMessages[4]); // [num client] x y level timing
                     }
                 }
             }

@@ -6,7 +6,6 @@ import it.fdb.gocarrot.blocks.special.*;
 import it.fdb.gocarrot.bonus.Coin;
 import it.fdb.gocarrot.bonus.GenericBonus;
 import it.fdb.gocarrot.bonus.Shield;
-import it.fdb.gocarrot.element.Checkpoint;
 import it.fdb.gocarrot.element.Finish;
 import it.fdb.gocarrot.element.GenericElement;
 
@@ -46,6 +45,10 @@ public class Player {
 
     private int level = 1;
 
+    private final Timer timer;
+
+    private boolean visible;
+
     /**
      * Costruttore che inizializza un oggetto di tipo Player
      * Posiziona il giocatore sull'asse x e y, crea una sua hitbox
@@ -72,6 +75,8 @@ public class Player {
             throw new RuntimeException(e);
         }
         System.out.println(this.clientNo);
+        this.timer = new Timer();
+        this.visible = true;
     }
 
 
@@ -221,7 +226,6 @@ public class Player {
                     }
                 }else if(element instanceof GenericElement){
                     if(hitBox.intersects(((GenericElement) element).getHitBox())){
-                        if(element instanceof Checkpoint) { /*TODO: implementazione*/ }
                         if(element instanceof Finish){ this.completedLevel= true; }
                     }
                 }
@@ -259,7 +263,7 @@ public class Player {
         graphics2D.drawArc(x + 3, y + 20, 40, 10, 0, -180);
         graphics2D.drawArc(x + 7, y + 40, 40, 10, 0, -130);
         graphics2D.drawArc(x + 4, y + 60, 40, 10, 180, 110);
-        if(numShield >= 1){
+        if (numShield >= 1) {
             graphics2D.setColor(Color.decode("#82766f"));
             graphics2D.fillRect(x + 20, y + 40, 32, 36);
             graphics2D.fillPolygon(new int[]{x + 21, x + 52, x + 36}, new int[]{y + 76, y + 76, y + 81}, 3);
@@ -268,51 +272,6 @@ public class Player {
             graphics2D.drawLine(x + 21, y + 66, x + 51, y + 66);
             graphics2D.drawLine(x + 36, y + 41, x + 36, y + 79);
         }
-
-        /*
-        // cavallo
-        graphics2D.setColor(Color.decode("#662200"));
-        graphics2D.fillRoundRect(200, 195, 150, 55, 70, 70);
-        // zampe
-        graphics2D.setStroke(new BasicStroke(8));
-        graphics2D.draw(new Line2D.Float(225, 250, 225, 300));
-        graphics2D.draw(new Line2D.Float(250, 250, 250, 300));
-        graphics2D.draw(new Line2D.Float(305, 250, 305, 300));
-        graphics2D.draw(new Line2D.Float(330, 250, 330, 300));
-        // cosce
-        graphics2D.fillOval(280,195,70,65);
-        graphics2D.fillPolygon(new Polygon(new int[]{250,305,310},new int[]{250,250,260}, 3));
-        graphics2D.fillOval(205,205,70,50);
-        graphics2D.fillPolygon(new Polygon(new int[]{300,355,333},new int[]{230,230,275}, 3));
-        graphics2D.fillPolygon(new Polygon(new int[]{275,330,308},new int[]{230,230,275}, 3));
-        graphics2D.fillPolygon(new Polygon(new int[]{201,255,223},new int[]{230,230,270}, 3));
-        graphics2D.fillPolygon(new Polygon(new int[]{235,280,248},new int[]{230,230,270}, 3));
-        // coda
-        graphics2D.setColor(Color.decode("#4d1a00"));
-        graphics2D.fillPolygon(new Polygon(new int[]{343,355,370},new int[]{205,265,255}, 3));
-        // collo
-        graphics2D.setColor(Color.decode("#662200"));
-        graphics2D.fillRoundRect(200, 160, 45, 90, 70, 70);
-        // testa con mandibola
-        graphics2D.fillRoundRect(165, 150, 70, 30, 70, 70);
-        graphics2D.fillRoundRect(165, 180, 70, 15, 70, 70);
-        // orecchie
-        graphics2D.fillPolygon(new Polygon(new int[]{240,210,220},new int[]{190,190,130}, 3));
-        // occhio
-        graphics2D.setColor(Color.WHITE);
-        graphics2D.fillOval(205,150,15,15);
-        graphics2D.setColor(Color.BLACK);
-        graphics2D.fillOval(205,150,9,9);
-        // dentini
-        graphics2D.setColor(Color.WHITE);
-        graphics2D.fillRect(180,178,3,5);
-        graphics2D.fillRect(175,176,3,5);
-        graphics2D.fillRect(185,178,3,5);
-        graphics2D.fillRect(190,178,3,5);
-        // criniera
-        graphics2D.setColor(Color.decode("#4d1a00"));
-        graphics2D.fillPolygon(new Polygon(new int[]{228,240,260},new int[]{152,210,210}, 3));
-         */
     }
 
     public void setKeyUP(boolean keyUP) {
@@ -384,6 +343,18 @@ public class Player {
 
     public void setLevel(int level) {
         this.level = level;
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+    }
+
+    public boolean isVisible() {
+        return visible;
+    }
+
+    public Timer getTimer() {
+        return timer;
     }
 }
 

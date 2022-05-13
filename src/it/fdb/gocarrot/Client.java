@@ -4,6 +4,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.security.PublicKey;
 
 /**
  * Metodo che rappresenta il client
@@ -17,7 +18,7 @@ public class Client {
 
     public Client(Board board){
         try {
-            socket = new Socket("10.0.0.191", 5050);
+            socket = new Socket("localhost", 5050);
             dataOutputStream = new DataOutputStream(socket.getOutputStream());
             dataInputStream = new DataInputStream(socket.getInputStream());
             this.board = board;
@@ -32,7 +33,8 @@ public class Client {
      * @throws IOException Lancia eccezzione in caso di problemi con la comunicazione col server
      */
     public void sendCoordinates(int clientNo) throws IOException {
-        dataOutputStream.writeUTF(clientNo + " " + (board.getPlayer().getX() - board.getCamera().getX()) + " " + board.getPlayer().getY() + " " + board.getPlayer().getLevel());
+        dataOutputStream.writeUTF(clientNo + " " + (board.getPlayer().getX() - board.getCamera().getX()) + " " + board.getPlayer().getY() + " " + board.getPlayer().getLevel() + " " +
+            board.getPlayer().getTimer().getSecondi());
     }
 
     /**
@@ -70,5 +72,9 @@ public class Client {
         dataOutputStream.writeUTF("nClient");
         String risposta = dataInputStream.readUTF();
         return Integer.parseInt(risposta);
+    }
+
+    public void sendTime(int clientNo) throws IOException {
+        dataOutputStream.writeUTF(clientNo + " " + board.getPlayer().getTimer().getSecondi());
     }
 }

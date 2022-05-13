@@ -6,12 +6,14 @@ import it.fdb.gocarrot.blocks.simple.Grass;
 import it.fdb.gocarrot.blocks.special.Spike;
 import it.fdb.gocarrot.bonus.GenericBonus;
 import it.fdb.gocarrot.element.GenericElement;
+import it.fdb.gocarrot.element.Horse;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -118,9 +120,10 @@ public class Board extends JPanel {
     public void paintComponent(Graphics graphics){
         super.paintComponent(graphics);
         Graphics2D graphics2D = (Graphics2D) graphics;
-        player.draw(graphics2D);
-        opponent.draw(graphics2D);
-        // opponent.draw(graphics2D);
+        if(player.isVisible()){
+            opponent.draw(graphics2D);
+            player.draw(graphics2D);
+        }
         for(ArrayList<Object> strato : mappa){
             for(Object element : strato) {
                 if(element instanceof Block)
@@ -132,15 +135,31 @@ public class Board extends JPanel {
             }
         }
         graphics2D.setFont(new Font("Arial", Font.BOLD, 18));
-        String stringLevel = "Livello: " + player.getLevel();
-        String stringScore = "Score: " + player.getScore();
-        String stringScudo = "Scudo: " + (player.hasShield() ? "SI" : "NO") + " " +
-                (player.getNumShield() > 1 ? "x" + player.getNumShield() : "");
+        if(player.isVisible()) {
+            graphics2D.setColor(Color.DARK_GRAY);
+            String stringLevel = "Livello: " + player.getLevel();
+            String stringScore = "Score: " + player.getScore();
+            String stringScudo = "Scudo: " + (player.hasShield() ? "SI" : "NO") + " " +
+                    (player.getNumShield() > 1 ? "x" + player.getNumShield() : "");
 
-        int max = stringScudo.length();
-        graphics2D.drawString(stringLevel, 600 - max * 10 - 10, 30);
-        graphics2D.drawString(stringScudo, 600 - max * 10 - 10, 50);
-        graphics2D.drawString(stringScore, 600 - max * 10 - 10, 70);
+            int max = stringScudo.length();
+            graphics2D.drawString(stringLevel, 600 - max * 10 - 10, 30);
+            graphics2D.drawString(stringScudo, 600 - max * 10 - 10, 50);
+            graphics2D.drawString(stringScore, 600 - max * 10 - 10, 70);
+        } else {
+            Horse horse = new Horse(240, 145);
+            horse.draw(graphics2D);
+            graphics2D.setColor(new Color(204, 119, 34, 70));
+            graphics2D.setStroke(new BasicStroke(4));
+            graphics2D.drawRect(150, 200, 300, 300);
+            graphics2D.setColor(new Color(204, 119, 34, 30));
+            graphics2D.fillRect(150, 200, 300, 300);
+            graphics2D.setColor(Color.DARK_GRAY);
+            graphics2D.drawString("CLASSIFICA: ", 250, 300);
+            graphics2D.drawString("TU: " + player.getTimer().getSecondi() + " secondi", 200, 370);
+            graphics2D.drawString("AVVERSARIO: " +
+                    (opponent.getTempoPartita() > 0 ? opponent.getTempoPartita() + " secondi": "//"), 200, 420);
+        }
     }
 
     /**
@@ -151,8 +170,11 @@ public class Board extends JPanel {
         try {
             mappa = mapReader.read(String.valueOf(lvl));
         } catch (FileNotFoundException e){
-            player.setLevel(1);
-            loadMap(player.getLevel());
+            // player.setLevel(1);
+            // loadMap(player.getLevel());
+            mappa.clear();
+            player.setVisible(false);
+            player.getTimer().stop();
         } catch (IOException e) {
             e.printStackTrace();
         }
