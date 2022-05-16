@@ -13,6 +13,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.desktop.SystemSleepEvent;
 import java.awt.geom.Line2D;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -86,7 +87,7 @@ public class Player {
     /**
      * Metodo che si occupa di gestire il player, i movimenti, le collisioni
      */
-    public void set(){
+    public void move(){
         // Invia le coordinate del player al server
         try {
             client.sendCoordinates(clientNo);

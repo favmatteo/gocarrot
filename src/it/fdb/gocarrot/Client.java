@@ -60,7 +60,10 @@ public class Client {
      */
     public int getNumberID() throws IOException {
         dataOutputStream.writeUTF("myNumber");
-        String risposta = dataInputStream.readUTF();
+        String risposta;
+        do {
+            risposta = dataInputStream.readUTF();
+        }while (risposta.contains(" "));
         return Integer.parseInt(risposta);
     }
 
@@ -73,6 +76,12 @@ public class Client {
         return Integer.parseInt(risposta);
     }
 
+    /**
+     * Invia al server il tempo trascorso del player
+     * @param clientNo numero cliente
+     * @throws IOException eccezione in caso di errore
+     * @deprecated vedere sendCoordinates()
+     */
     public void sendTime(int clientNo) throws IOException {
         dataOutputStream.writeUTF(clientNo + " " + board.getPlayer().getTimer().getSecondi());
     }

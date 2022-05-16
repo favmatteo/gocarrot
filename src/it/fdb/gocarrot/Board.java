@@ -54,7 +54,7 @@ public class Board extends JPanel {
             @Override
             public void run() {
                 Toolkit.getDefaultToolkit().sync(); // su linux
-                player.set();
+                player.move();
                 for(ArrayList<Object> strato : mappa){
                     for(Object element : strato) {
                         if(element instanceof Block) ((Block)element).set(camera);

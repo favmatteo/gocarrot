@@ -44,7 +44,6 @@ public final class ServerSocketThread extends Thread {
             String clientMessage = "";
             while (!clientMessage.equals("quit")){
                 if(multithreadedSocketServer.getServerSocketThreads().size() == 1){
-                    System.out.println(clientNo + " diventa 1");
                     clientNo = 1;
                 }
 
