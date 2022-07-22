@@ -49,3 +49,5 @@ Da una celebre citazione di Dante Alighieri mentre si trovava in paradiso dinanz
 > Si certo, GoCarrot è un ottimo gioco
 > ma vi consiglio di provare anche l'amatissimo,
 > ma proprio amatissimo [Navicella Cavallo](https://github.com/favmatteo/navicella-cavallo)
+
+Questo progetto non è un buon esempio di corretto stile di programmazione, è stato creato solamente come progetto scolastico.
